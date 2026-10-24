@@ -239,8 +239,10 @@ def mean_absolute_error(y_true, y_pred):
     return np.linalg.vector_norm(y_true - y_pred, ord = 1) / y_true.shape[0]
     pass
 
-# Step 19 - root_mean_squared_error (not yet solved)
-# TODO: implement
+# Step 19 - root_mean_squared_error
+def root_mean_squared_error(y_true, y_pred):
+    residuals = np.asarray(y_true, dtype=np.float64) - np.asarray(y_pred, dtype=np.float64)
+    return float(np.sqrt(np.mean(residuals ** 2)))
 
 # Step 20 - r_squared (not yet solved)
 # TODO: implement
