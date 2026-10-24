@@ -107,8 +107,12 @@ def mse_loss(y_true, y_pred):
     return np.linalg.norm(y_true - y_pred)**2 / n 
     pass
 
-# Step 9 - mse_gradient (not yet solved)
-# TODO: implement
+# Step 9 - mse_gradient
+def mse_gradient(X, y_true, y_pred):
+    # TODO: Return the analytic MSE gradient w.r.t. weights: (2/n) X^T (y_pred - y_true)
+    n = y_true.shape[0]
+    return (2/n) * X.T @ (y_pred - y_true)
+    pass
 
 # Step 10 - normal_equation (not yet solved)
 # TODO: implement
