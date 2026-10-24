@@ -122,10 +122,9 @@ def normal_equation(X, y):
 
 # Step 11 - initialize_weights
 def initialize_weights(n_features, seed=None):
-    # TODO: Return (n_features,) weights sampled from N(0, 0.01)
-    rng = np.random.default_rng(seed)
-    return rng.normal(0, 0.01, (n_features))
-    pass
+    """Return (n_features,) weights sampled from N(0, 0.01)."""
+    rng = np.random.RandomState(seed)
+    return rng.normal(0, 0.01, n_features)
 
 # Step 12 - gd_step
 def gd_step(X, y, weights, lr):
@@ -184,16 +183,16 @@ def update_early_stop_state(val_loss, best_val_loss, wait, weights, best_weights
 
 # Step 15 - init_training_state
 def init_training_state(n_features, seed=None):
-    # TODO: Build the initial training-state dictionary for the GD epoch loop.
-    init = initialize_weights(n_features, seed)
+    weights = initialize_weights(n_features, seed)
     return {
-        "best_weights" : init,
-        "best_val_loss" : np.inf,
-        "wait" : 0,
-        "train_losses" :  [],
-        "val_losses" : []
+        "weights": weights,
+        "best_weights": np.array(weights, copy=True),
+        "best_val_loss": np.inf,
+        "wait": 0,
+        "train_losses": [],
+        "val_losses": [],
+        "stopped": False,
     }
-    pass
 
 # Step 16 - run_one_epoch (not yet solved)
 # TODO: implement
