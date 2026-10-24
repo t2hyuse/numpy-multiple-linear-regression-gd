@@ -115,10 +115,13 @@ def mse_gradient(X, y_true, y_pred):
     pass
 
 # Step 10 - normal_equation
+import numpy as np
+
 def normal_equation(X, y):
-    # TODO: Solve for the closed-form least-squares weights via the normal equation.
-    return np.linalg.solve(X.T @ X, X.T @ y)
-    pass
+    """Closed-form least squares; minimum-norm solution if X is rank-deficient."""
+    X = np.asarray(X, dtype=np.float64)
+    y = np.asarray(y, dtype=np.float64)
+    return np.linalg.lstsq(X, y, rcond=None)[0]
 
 # Step 11 - initialize_weights
 def initialize_weights(n_features, seed=None):
@@ -297,8 +300,32 @@ def create_lr_model(learning_rate=0.01, epochs=1000, patience=50, seed=0):
         "val_losses": [],
     }
 
-# Step 25 - fit_lr_model (not yet solved)
-# TODO: implement
+# Step 25 - fit_lr_model
+def fit_lr_model(model, X_train, y_train, X_val, y_val):
+    """Fit the model dict with train-only stats, GD with early stopping, and the normal equation."""
+    # 1. Standardization statistics from the training split only
+    mean, std = compute_feature_stats(X_train)
+    model["mean"] = mean
+    model["std"] = std
+
+    # 2. Design matrices (val uses the *train* mean/std)
+    Xd_train = prepare_design_matrix(X_train, mean, std)
+    Xd_val = prepare_design_matrix(X_val, mean, std)
+
+    # 3. Batch GD with the stored hyperparameters
+    weights, train_losses, val_losses = train_batch_gd(
+        Xd_train, y_train, Xd_val, y_val,
+        model["learning_rate"], model["epochs"], model["patience"],
+        seed=model["seed"],
+    )
+    model["weights"] = weights
+    model["train_losses"] = train_losses
+    model["val_losses"] = val_losses
+
+    # 4. Closed-form solution on the training design matrix
+    model["normal_weights"] = normal_equation(Xd_train, y_train)
+
+    return model
 
 # Step 26 - predict_lr_model (not yet solved)
 # TODO: implement
