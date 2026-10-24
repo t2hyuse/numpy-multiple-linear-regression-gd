@@ -150,8 +150,20 @@ def gd_step(X, y, weights, lr):
 
     pass
 
-# Step 13 - epoch_train_val_losses (not yet solved)
-# TODO: implement
+# Step 13 - epoch_train_val_losses
+import numpy as np
+
+def epoch_train_val_losses(X_train, y_train, X_val, y_val, weights):
+    """Evaluate MSE on train and validation sets for the current weights."""
+    X_train = np.asarray(X_train, dtype=np.float64)
+    X_val = np.asarray(X_val, dtype=np.float64)
+    y_train = np.asarray(y_train, dtype=np.float64)
+    y_val = np.asarray(y_val, dtype=np.float64)
+    w = np.asarray(weights, dtype=np.float64)
+
+    train_loss = float(np.mean((X_train @ w - y_train) ** 2))
+    val_loss = float(np.mean((X_val @ w - y_val) ** 2))
+    return train_loss, val_loss
 
 # Step 14 - update_early_stop_state (not yet solved)
 # TODO: implement
