@@ -259,8 +259,15 @@ def r_squared(y_true, y_pred):
     return 1 - SS_res / SS_tot
     pass
 
-# Step 21 - evaluate_regression (not yet solved)
-# TODO: implement
+# Step 21 - evaluate_regression
+def evaluate_regression(y_true, y_pred):
+    # TODO: Bundle MAE, RMSE, and R^2 into one metrics dictionary for test-set reporting.^
+    return {
+        "mae" : mean_absolute_error(y_true, y_pred),
+        "rmse" : root_mean_squared_error(y_true, y_pred),
+        "r2" : r_squared(y_true, y_pred)
+    }
+    pass
 
 # Step 22 - learning_curve_data (not yet solved)
 # TODO: implement
