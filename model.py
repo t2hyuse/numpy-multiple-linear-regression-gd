@@ -244,8 +244,20 @@ def root_mean_squared_error(y_true, y_pred):
     residuals = np.asarray(y_true, dtype=np.float64) - np.asarray(y_pred, dtype=np.float64)
     return float(np.sqrt(np.mean(residuals ** 2)))
 
-# Step 20 - r_squared (not yet solved)
-# TODO: implement
+# Step 20 - r_squared
+def r_squared(y_true, y_pred):
+    # TODO: Compute the coefficient of determination R^2.
+    vec = y_true - y_pred
+    y_bar = np.mean(y_true)
+    SS_res = np.dot(vec, vec)
+
+    vec2 = y_true - y_bar * np.ones_like(y_true)
+
+    SS_tot = np.dot(vec2, vec2)
+    if SS_tot == 0:
+        return np.nan
+    return 1 - SS_res / SS_tot
+    pass
 
 # Step 21 - evaluate_regression (not yet solved)
 # TODO: implement
