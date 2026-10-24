@@ -269,8 +269,12 @@ def evaluate_regression(y_true, y_pred):
     }
     pass
 
-# Step 22 - learning_curve_data (not yet solved)
-# TODO: implement
+# Step 22 - learning_curve_data
+def learning_curve_data(train_losses, val_losses):
+    train = [float(x) for x in train_losses]
+    val = [float(x) for x in val_losses]
+    epochs = list(range(1, len(train) + 1))
+    return epochs, train, val
 
 # Step 23 - weights_l2_distance (not yet solved)
 # TODO: implement
